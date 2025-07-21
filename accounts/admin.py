@@ -1,24 +1,27 @@
 from django.contrib import admin
-from .models import User, Profile
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .models import User, Profile
 
-# User 모델용 Admin
-class CustomUserAdmin(BaseUserAdmin): 
-    list_display = ["username", "first_name", "last_name", "email"]
-    add_fieldsets = (
-        ("인증정보", {"fields": ("username", "password1", "password2")}),
-        ("개인정보", {"fields": ("first_name", "last_name", "email")}),
-    )
+# User Admin 커스텀
+class UserAdmin(BaseUserAdmin):
+    list_display = ['username', 'email', 'first_name', 'last_name', 'is_staff']
     fieldsets = (
-        ("인증정보", {"fields": ("username", "password")}),
-        ("개인정보", {"fields": ("first_name", "last_name", "email")}),
-        ("권한", {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
+        ('계정 정보', {'fields': ('username', 'password')}),
+        ('개인 정보', {'fields': ('first_name', 'last_name', 'email')}),
+        ('권한', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('중요 날짜', {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2'),
+        }),
     )
 
-# Profile 모델용 Admin
+# Profile Admin
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ["user", "image"]
+    list_display = ['user', 'image']
 
-# Django Admin 등록
-admin.site.register(User, CustomUserAdmin)
+# Admin에 등록
+admin.site.register(User, UserAdmin)
 admin.site.register(Profile, ProfileAdmin)
