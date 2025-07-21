@@ -86,6 +86,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'babsim', # Database이름
+        'USER': 'admin', # 사용자 계정
+        'PASSWORD': '12345678', # 패스워드
+        'HOST': '127.0.0.1', # DBMS 서버 ip
+        'PORT': '3306',      # DBMS 서버 port
     }
 }
 
