@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VSCode, PyCharm 등 IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# 환경설정/보안
+.env
+*.env
+
+# 데이터/이미지/모델
+/data/
+!data/.gitkeep
+
+# 생성 이미지(폴더 내 파일은 무시, 폴더는 유지)
+data/generated_images/*
+!data/generated_images/.gitkeep
+
+# 기타
+.DS_Store
+Thumbs.db
+
+# 로그
+*.log
+
+# 모델 체크포인트/캐시
+*.ckpt
+*.pth
+*.pt
+*.bin
+.cache/
+
+# pip wheel
+*.whl
