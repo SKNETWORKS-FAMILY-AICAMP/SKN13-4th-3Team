@@ -2,14 +2,14 @@ from django.db import models
 
 # Create your models here.
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 class ChatSession(models.Model):
     """
     각 사용자의 전체 대화 세션을 나타냅니다.
     하나의 세션 안에는 여러 개의 메시지가 포함됩니다.
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

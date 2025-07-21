@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
     'chat_bot',
     'main',
 ]
@@ -71,7 +71,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+AUTH_USER_MODEL = 'accounts.User'
 
+
+###########################################
+# 로그인 관련 설정
+###########################################
+# 로그인 하지 않은 사용자가 @login_required인 view를 호출했을 때 이동한 url 지정
+LOGIN_URL = '/accounts/login'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 

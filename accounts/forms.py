@@ -1,14 +1,18 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
 # from .forms import SignupForm, LoginForm, ProfileUpdateForm, ProfileDeleteForm
 # import accounts.forms as account_forms
 
+
+#회원가입 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ("username", "email", "password1", "password2")
 
 
@@ -22,7 +26,7 @@ class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(required=True, label="이메일")
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ("first_name", "email")
 
 
@@ -37,4 +41,3 @@ class ProfileDeleteForm(forms.Form):
         if confirm != "계정을 탈퇴합니다.":
             raise forms.ValidationError("문장을 정확하게 입력해주세요.")
         return confirm
-
