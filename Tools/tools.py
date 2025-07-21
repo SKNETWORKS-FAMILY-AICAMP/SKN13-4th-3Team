@@ -4,7 +4,7 @@ import json
 
 @tool
 def search_web(query: str, max_results: int = 3, time_range: str = "month") -> str: # 반환 타입을 dict에서 str로 변경
-    """최신 정보가 필요할 때 인터넷 검색을 하는 Tool입니다. 예를 들어 '네이버 블로그 저작권'과 같은 질문에 사용합니다.""" # description 명확화
+    """최신 정보가 필요할 때 인터넷 검색을 하는 Tool입니다. """ # description 명확화
     tavily_search = Tavilysearch(max_results=max_results, time_range=time_range)
     search_result = tavily_search.invoke(query)["results"]
     if search_result:
