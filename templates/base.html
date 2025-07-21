@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}기업 특화 이미지 생성 AI{% endblock %}</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+
+    <header class="bg-white shadow-md py-4 px-8 flex justify-between items-center">
+        <h1 class="text-xl font-bold">
+            <a href="{% url 'main:home' %}">🚗 기업 이미지 생성 AI</a>
+        </h1>
+        <nav class="space-x-4">
+            <a href="{% url 'main:home' %}" class="text-blue-600 hover:underline">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'accounts:profile' %}" class="text-blue-600 hover:underline">My Page</a>
+                <a href="{% url 'accounts:logout' %}" class="text-red-500 hover:underline">Logout</a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="text-blue-600 hover:underline">Login</a>
+                <a href="{% url 'accounts:signup' %}" class="text-green-600 hover:underline">Signup</a>
+            {% endif %}
+            <a href="{% url 'chat_bot:chat_bot' %}" class="text-purple-600 hover:underline">Chatbot</a>
+        </nav>
+    </header>
+
+    <main class="max-w-4xl mx-auto py-8 px-4 flex-grow w-full">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-gray-200 text-center py-4 mt-8 text-sm text-gray-600">
+        &copy; Team Babsim AI. All rights reserved.
+    </footer>
+
+</body>
+</html>
