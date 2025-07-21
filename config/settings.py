@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#&1va1*c2ckdtg5ds9u-57=fv-0u^bphama4p)69o*l^o#k31e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -129,22 +129,42 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+#######################################
+# Static files (CSS, JavaScript, Images) 들을 요청할때 사용할 url의 시작
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
-STATIC_ROOT = BASE_DIR / 'static_collection'
-MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
 
-DEBUG = False
-ALLOWED_HOSTS = ['*']
+STATIC_URL = 'static/'
+# app/static 이외의 경로에 static 파일들이 있을 경우 그 디렉토리를 설정.
+STATICFILES_DIRS = [BASE_DIR / 'staticfiles'] #/static/imgs/survey.jpg
+
+STATIC_ROOT = BASE_DIR / 'statics'
+# python manage.py collectstatic  실행하면 모든 static 파일들을 STATIC_ROOT 경로에 모아준다.
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+###############################
+# 사용자 정의 User 모델을 등록
+###############################
+AUTH_USER_MODEL = "account.User"  # AbstractUser 클래스를 등록.
 
-MEDIA_URL = '/media/'
+################################
+# 로그인 관련 설정
+################################
+# 로그인 하지 않은 사용자가 @login_required 인 View를 호출 했을 때 이동할 url을 지정.
+LOGIN_URL = '/account/login'
+
+
+############################################
+# MEDIA 설정 (파일업로드)
+############################################
+# 업로드 파일들을 저장할 root 경로 설정
+MEDIA_ROOT = BASE_DIR / "media"
+
+# Client가 업로드된 파일을 요청할 때 사용할 (시작)url 설정
+MEDIA_URL = "/media/"
+
+# "/media/xxxxx" url로 요청하면 MEDIA_ROOT 경로에서 찾아서 응답.
