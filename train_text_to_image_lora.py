@@ -47,6 +47,8 @@ from PIL import Image
 import json
 import os
 
+import gc
+
 import diffusers
 from diffusers import AutoencoderKL, DDPMScheduler, DiffusionPipeline, StableDiffusionPipeline, UNet2DConditionModel
 from diffusers.optimization import get_scheduler
@@ -476,12 +478,6 @@ DATASET_NAME_MAPPING = {
     "lambdalabs/naruto-blip-captions": ("image", "text"),
 }
 
-# 메모리 정리 함수 정의
-def cleanup_memory():
-    gc.collect()                          # Python 메모리 정리
-    torch.cuda.empty_cache()             # PyTorch GPU 캐시 비우기
-    torch.cuda.ipc_collect()             # CUDA 인터프로세스 메모리 정리 (optional)
-
 
 def main():
     args = parse_args()
@@ -548,7 +544,7 @@ def main():
 
 
     # ✅ 데이터셋 경로 지정
-    json_path = "./car_image_text.json"       # JSON 파일 경로
+    json_path = "./car_images_all/car_image_text.json"       # JSON 파일 경로
     image_root = "./car_images_all"           # 이미지 루트 폴더
     
     # ✅ 데이터셋 로딩
@@ -690,7 +686,11 @@ def main():
     
     # Preprocessing the datasets.
     # We need to tokenize inputs and targets.
-    column_names = dataset["train"].column_names
+    # 오류나서 수정
+    # column_names = dataset["train"].column_names
+    # ✅ 수정 예시 (caption_column은 이미 args로 받음)
+    caption_column = args.caption_column
+    column_names = ["image", args.caption_column]
 
     # 6. Get the column names for input/target.
     dataset_columns = DATASET_NAME_MAPPING.get(args.dataset_name, None)
@@ -759,11 +759,29 @@ def main():
         examples["input_ids"] = tokenize_captions(examples)
         return examples
 
+    # 오류나서 수정
+    # with accelerator.main_process_first():
+    #     if args.max_train_samples is not None:
+    #         dataset["train"] = dataset["train"].shuffle(seed=args.seed).select(range(args.max_train_samples))
+    #     # Set the training transforms
+    #     train_dataset = dataset["train"].with_transform(preprocess_train)
+        
     with accelerator.main_process_first():
+        train_dataset = CarImageTextDataset(
+            json_path="./car_images_all/car_image_text.json",
+            image_root="./car_images_all",
+            tokenizer=tokenizer,
+            image_processor=image_processor,
+        )
+
         if args.max_train_samples is not None:
-            dataset["train"] = dataset["train"].shuffle(seed=args.seed).select(range(args.max_train_samples))
-        # Set the training transforms
-        train_dataset = dataset["train"].with_transform(preprocess_train)
+            train_dataset.data = train_dataset.data[:args.max_train_samples]
+
+    # 메모리 정리 함수 정의
+    def cleanup_memory():
+        gc.collect()                          # Python 메모리 정리
+        torch.cuda.empty_cache()             # PyTorch GPU 캐시 비우기
+        torch.cuda.ipc_collect()             # CUDA 인터프로세스 메모리 정리 (optional)
 
     def collate_fn(examples):
         pixel_values = torch.stack([example["pixel_values"] for example in examples])
@@ -945,6 +963,8 @@ def main():
                 optimizer.step()
                 lr_scheduler.step()
                 optimizer.zero_grad()
+                                
+            # ✅ 5 step마다 메모리 정리
             if step % 5 == 0:
                 cleanup_memory()
 

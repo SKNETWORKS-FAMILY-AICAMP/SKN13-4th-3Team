@@ -1,7 +1,7 @@
 # 사용 모델 : [stable-diffusion-v1-5](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5)
 
 
-✅ diffusers란?
+## ✅ [diffusers란?] (https://github.com/huggingface/diffusers.git)
 "Diffusion 모델을 불러오고, 실행하고, fine-tuning하고, inference하는 걸 간단하게 만들어주는 라이브러리"
 
 diffuser를 이용해서 현대 자동차 이미지 - 이미지에 대한 텍스트 설명 데이터 쌍을 stable-diffusion-v1-5 모델을 파인튜닝 진행 중.
@@ -39,3 +39,19 @@ UNet의 Cross-Attention 레이어에만 LoRA를 적용해서 훈련
 → 텍스트와 이미지의 연결 학습에 집중
 
 이 방식은 기존 스타일이나 일반적인 생성 능력은 유지하면서, “현대차 디자인”에 대한 반응을 학습시키는 데 적합해.
+
+runpod 환경에 diffuser를 clone한 다음 pip install . 으로 requirement 모듈 설치하고 train_text_to_image_lora.py 실행 시킬 수 있도록 추가적으로 모듈 설치.
+
+## Stable Diffusion 파인 튜닝
+대표 기법 2가지.
+
+**A. DreamBooth**
+- Google 연구팀이 개발한 기법
+- 몇 장의 이미지로 모델을 특정 인물·스타일에 맞게 세밀하게 조정
+- 고품질, 일관된 생성 가능 
+
+
+**B. LoRA (Low‑Rank Adaptation)**
+- 저랭크 행렬을 활용해 일부 가중치만 업데이트
+- 효율적이며 메모리 사용량과 학습 시간 감소
+- 적은 데이터로도 효과적인 학습 가능
