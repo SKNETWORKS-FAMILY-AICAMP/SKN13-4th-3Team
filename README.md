@@ -234,10 +234,15 @@ McKinsey 다이아몬드 모델은 다음과 같은 단계로 UX와 SX를 치밀
 ┣ 📂templates<br>
 ┃ ┗ 📜base.html<br>
 ┣ 📂Code<br>
-┃ ┗ 📜<br>
-┃ ┗ 📜<br>
+┃ ┗ 📜InternVL3<br>
+┃ ┃ ┣ ...
+┃ ┗ 📜model_core<br>
+┃ ┃ ┣ ...
+┃ ┗ 📜stable-diffusion<br>
+┃ ┃ ┣ ...
 ┣ 📂산출물<br>
-┃ ┗ 📜System Architecture.png<br>
+┃ ┗ 📜System Architecture.pdf<br>
+┃ ┗ 📜Langgraph.pdf<br>
 ┃ ┗ 📜4차프로젝트__UI설계.png<br>
 ┃ ┗ 📜test.md<br>
 ┣ 📜.DS_Store<br>
@@ -324,7 +329,7 @@ McKinsey 다이아몬드 모델은 다음과 같은 단계로 UX와 SX를 치밀
 
 
  🔧**시스템 아키텍처**<br>
-<img src="https://github.com/user-attachments/assets/2fc5f657-a327-485f-a611-d8a248c0a8df" width="800" alt="system"> <br>
+<img src="https://github.com/user-attachments/files/21360548/SystemArchitecture.pdf" width="800" alt="system"> <br>
 
 
  🔧**UI 화면 설계서**<br>
