@@ -199,6 +199,9 @@
 ┣ 📂Code<br>
 ┃ ┗ 📜<br>
 ┃ ┗ 📜<br>
+┣ 📂산출물<br>
+┃ ┗ 📜시스템 아키텍쳐.png<br>
+┃ ┗ 📜4차프로젝트__UI설계.png<br>
 ┣ 📜.DS_Store<br>
 ┣ 📜.gitignore<br>
 ┣ 📜README.md<br>
@@ -226,7 +229,8 @@
  🔧**시스템 아키텍처**<br>
 <img src="https://github.com/user-attachments/assets/3674399e-9305-4713-8e79-f35bf0148dfc" width="800" alt="system"> <br>
 
-
+ 🔧**UI 화면 설계서**<br>
+<img src="https://github.com/user-attachments/assets/7b1b2875-0c88-46c7-8d45-4eb2fab2391d" width="800" alt="system"> <br>
 
 
 ### 🐥 7. 챗봇 구현 화면
