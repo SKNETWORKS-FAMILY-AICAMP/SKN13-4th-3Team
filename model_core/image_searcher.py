@@ -1,5 +1,4 @@
 from model_core.graph_state import GraphState
-from sentence_transformers import SentenceTransformer
 from langchain.vectorstores import Qdrant
 from qdrant_client import QdrantClient
 from langchain_openai import OpenAIEmbeddings

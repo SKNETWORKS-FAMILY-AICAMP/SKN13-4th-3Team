@@ -13,7 +13,7 @@ GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
 
 # 데이터 폴더 생성
-DATA_DIR = os.path.join(os.path.dirname(__file__), "../chatbot/generated_images")
+DATA_DIR = os.path.join(os.path.dirname(__file__), "../data/generated_images")
 os.makedirs(DATA_DIR, exist_ok=True)
 
 # Stable Diffusion 파이프라인 초기화

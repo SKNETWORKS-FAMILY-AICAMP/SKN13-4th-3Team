@@ -38,21 +38,18 @@ def response_node(state: GraphState) -> Iterator[str]:
     state.final_response = "" # Initialize final_response for accumulation
 
     if state.intent == "image_search":
+        # 이미지 생성 경로
         if state.image_search_similarity is not None and state.image_search_similarity < 0.5:
             # 생성 이미지 파일명만 반환 (Django에서 /media/파일명으로 접근)
             response_content = os.path.basename(state.image_gen_result)
+        # 이미지 찾기 경로
         else:
-            # 유사 이미지가 URL이면 URL, 경로면 파일명만 반환
-            if state.image_search_result and str(state.image_search_result).startswith("http"):
-                response_content = state.image_search_result
-            else:
-                response_content = state.image_search_result
+            response_content = os.path.basename(state.image_search_result)
         state.final_response = response_content
-        if state.image_search_result and str(state.image_search_result).startswith("http"):
-            print(1)
-            yield {"type": "image", "content": os.path.basename(state.image_search_result)}
+        if state.image_search_result:
+            yield {"type": "image", "content": response_content}
         elif state.image_gen_result:
-            yield {"type": "gen", "content": os.path.basename(state.image_gen_result)}
+            yield {"type": "gen", "content": response_content}
         else:
             yield {"type": "text", "content": response_content}
     elif state.intent == "faq_rag":

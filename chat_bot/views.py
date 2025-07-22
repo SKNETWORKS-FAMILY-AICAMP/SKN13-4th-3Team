@@ -47,15 +47,18 @@ def chat_conversation(request, session_id=None):
                     for chunk_data in chatbot_pipeline(user_input=user_message_content):
                         if isinstance(chunk_data, dict):
                             if chunk_data.get("type") == "image":
+                                print("type=image 의 chunk_data임", chunk_data["content"])
                                 yield json.dumps({"type": "image", "content": chunk_data["content"]}) + "\n"
-                                ai_response_content += f"chatbot/{chunk_data['content']}" # Store a placeholder for history
+                                ai_response_content += f"chat_bot/{chunk_data['content']}" # Store a placeholder for history
                             elif chunk_data.get("type") == "text":
+                                print("type=text 의 chunk_data임", chunk_data["content"])
                                 content = chunk_data["content"]
                                 ai_response_content += content
                                 yield json.dumps({"type": "text", "content": content}) + "\n"
                             elif chunk_data.get("type") == "gen":
+                                print("type=gen 의 chunk_data임", chunk_data["content"])
                                 yield json.dumps({"type": "gen", "content": chunk_data["content"]}) + "\n"
-                                ai_response_content += f"chatbot/{chunk_data['content']}" # Store a placeholder for history
+                                ai_response_content += f"chat_bot/{chunk_data['content']}" # Store a placeholder for history
                             elif 'generation' in chunk_data: # Fallback for older generation chunks if any
                                 content = chunk_data['generation']
                                 ai_response_content += content
@@ -87,7 +90,7 @@ def chat_conversation(request, session_id=None):
     # 기존 대화 기록을 가져옵니다.
     chat_history = session.messages.all().order_by('created_at')
 
-    return render(request, 'chat_bot/chat_converation.html', {'chat_history': chat_history, 'session_id': session.id, 'conversations': conversations})
+    return render(request, 'chat_bot/chat_conversation.html', {'chat_history': chat_history, 'session_id': session.id, 'conversations': conversations})
 
 @login_required
 def clear_chat(request):
