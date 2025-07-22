@@ -171,7 +171,7 @@
 ┃ ┗ 📜<br>
 ┃ ┗ 📜<br>
 ┣ 📂산출물<br>
-┃ ┗ 📜시스템 아키텍쳐.png<br>
+┃ ┗ 📜System Architecture.png<br>
 ┃ ┗ 📜4차프로젝트__UI설계.png<br>
 ┃ ┗ 📜test.md<br>
 ┣ 📜.DS_Store<br>
@@ -199,7 +199,7 @@
 
 
  🔧**시스템 아키텍처**<br>
-<img src="https://github.com/user-attachments/assets/3674399e-9305-4713-8e79-f35bf0148dfc" width="800" alt="system"> <br>
+<img src="https://github.com/user-attachments/assets/2fc5f657-a327-485f-a611-d8a248c0a8df" width="800" alt="system"> <br>
 
 
  🔧**UI 화면 설계서**<br>
