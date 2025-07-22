@@ -1,5 +1,5 @@
-from flow import chatbot_pipeline
-from init_vectordb import init_description_vectordb
+from .flow import chatbot_pipeline
+from .init_vectordb import init_description_vectordb
 
 if __name__ == "__main__":
     # Qdrant description_vector_store가 없으면 최초 1회만 초기화
