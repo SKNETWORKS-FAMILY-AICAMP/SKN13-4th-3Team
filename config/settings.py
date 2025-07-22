@@ -151,10 +151,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ############################################
 # MEDIA 설정 (파일업로드)
 ############################################
-# 업로드 파일들을 저장할 root 경로 설정
-MEDIA_ROOT = BASE_DIR / "media"
-
 # Client가 업로드된 파일을 요청할 때 사용할 (시작)url 설정
-MEDIA_URL = "/media/"
+MEDIA_URL = "/chatbot/"
+
+
+# 업로드 파일들을 저장할 root 경로 설정
+MEDIA_ROOT = BASE_DIR / "chatbot/car_images_all"
+
+
+
 
 # "/media/xxxxx" url로 요청하면 MEDIA_ROOT 경로에서 찾아서 응답.

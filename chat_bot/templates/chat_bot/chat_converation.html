@@ -56,7 +56,9 @@
                         </div>
                         <div class="w-fit max-w-[70%] p-4 rounded-2xl {% if message.is_from_user %}bg-white text-black rounded-br-none{% else %}bg-gray-800 text-white rounded-bl-none{% endif %}">
                             {% if message.type == 'image' %}
-                                <img src="{{ message.content }}" alt="Generated Image" class="max-w-full h-auto rounded-lg">
+                                <img src="/car_images_all/{{ message.content }}" alt="Searched Image" class="max-w-full h-auto rounded-lg">
+                            {% elif message.type == 'gen' %}
+                                <img src="/generated_images/{{ message.content }}" alt="Generated Image" class="max-w-full h-auto rounded-lg">
                             {% else %}
                                 <p class="text-sm break-words">{{ message.content|linebreaksbr }}</p>
                             {% endif %}

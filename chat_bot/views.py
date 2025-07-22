@@ -48,11 +48,14 @@ def chat_conversation(request, session_id=None):
                         if isinstance(chunk_data, dict):
                             if chunk_data.get("type") == "image":
                                 yield json.dumps({"type": "image", "content": chunk_data["content"]}) + "\n"
-                                ai_response_content += f"[Image: {chunk_data['content']}]" # Store a placeholder for history
+                                ai_response_content += f"chatbot/{chunk_data['content']}" # Store a placeholder for history
                             elif chunk_data.get("type") == "text":
                                 content = chunk_data["content"]
                                 ai_response_content += content
                                 yield json.dumps({"type": "text", "content": content}) + "\n"
+                            elif chunk_data.get("type") == "gen":
+                                yield json.dumps({"type": "gen", "content": chunk_data["content"]}) + "\n"
+                                ai_response_content += f"chatbot/{chunk_data['content']}" # Store a placeholder for history
                             elif 'generation' in chunk_data: # Fallback for older generation chunks if any
                                 content = chunk_data['generation']
                                 ai_response_content += content

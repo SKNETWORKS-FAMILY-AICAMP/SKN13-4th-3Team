@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from config import settings
+from django.conf.urls.static import static
 
 app_name = 'chat_bot'
 
@@ -9,4 +11,4 @@ urlpatterns = [
     path('conversation/', views.chat_conversation, name='chat_conversation'),
     path('conversation/<int:session_id>/', views.chat_conversation, name='chat_conversation_with_id'),
     path('clear/', views.clear_chat, name='clear_chat'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

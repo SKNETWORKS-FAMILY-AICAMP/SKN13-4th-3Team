@@ -46,12 +46,13 @@ def response_node(state: GraphState) -> Iterator[str]:
             if state.image_search_result and str(state.image_search_result).startswith("http"):
                 response_content = state.image_search_result
             else:
-                response_content = os.path.basename(state.image_search_result)
+                response_content = state.image_search_result
         state.final_response = response_content
         if state.image_search_result and str(state.image_search_result).startswith("http"):
-            yield {"type": "image", "content": state.image_search_result}
+            print(1)
+            yield {"type": "image", "content": os.path.basename(state.image_search_result)}
         elif state.image_gen_result:
-            yield {"type": "image", "content": os.path.basename(state.image_gen_result)}
+            yield {"type": "gen", "content": os.path.basename(state.image_gen_result)}
         else:
             yield {"type": "text", "content": response_content}
     elif state.intent == "faq_rag":
