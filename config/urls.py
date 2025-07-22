@@ -25,7 +25,7 @@ urlpatterns = [
     path('', include('main.urls')), # main(홈) 관련
     path('accounts/', include('accounts.urls')), # 로그인/회원 관련
     path('chat_bot/', include('chat_bot.urls')), # 챗봇
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

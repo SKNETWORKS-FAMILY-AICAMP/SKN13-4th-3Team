@@ -1,39 +1,32 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import StreamingHttpResponse, JsonResponse
+from .models import ChatSession, ChatMessage
+from model_core.flow import chatbot_pipeline
+import json
 
 def chat_bot(request):
     return render(request, "chat_bot/chat_bot.html")
 
-# Create your views here.
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import ChatSession, ChatMessage
-
-# --- RAG 로직을 처리할 함수 (별도 파일로 분리하는 것을 권장) ---
-# 이 함수는 실제 Qdrant 검색 및 LLM 호출 로직을 구현해야 합니다.
-def get_rag_response(query):
-    # 1. Qdrant에서 query와 관련된 context 검색
-    # context = search_qdrant(query)
-    # 2. LLM 프롬프트 생성
-    # prompt = create_prompt(query, context)
-    # 3. LLM API 호출
-    # response = call_llm(prompt)
-    # 4. 답변 및 이미지 URL 파싱
-    # answer_text = parse_text(response)
-    # image_url = parse_image_url(response)
-
-    # 아래는 임시 하드코딩된 답변입니다.
-    # 실제 로직으로 교체해야 합니다.
-    answer_text = f"'{query}' 모델은 뛰어난 성능과 디자인을 자랑하는 최신 전기차입니다."
-    image_url = "https://placehold.co/600x400/0D1117/FFFFFF?text=Car+Image" # 임시 이미지
-    
-    return f"{answer_text}\n\n![추천 이미지]({image_url})"
-# ----------------------------------------------------------------
+@login_required
+def chat_list_view(request):
+    conversations = ChatSession.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'chat_bot/chat_bot.html', {'conversations': conversations})
 
 @login_required
-def chat_bot_view(request):
-    # 사용자의 가장 최근 대화 세션을 가져오거나 새로 생성합니다.
-    session, created = ChatSession.objects.get_or_create(user=request.user)
+def new_chat_session(request):
+    session = ChatSession.objects.create(user=request.user)
+    return redirect('chat_bot:chat_conversation_with_id', session_id=session.id)
+
+@login_required
+def chat_conversation(request, session_id=None):
+    if session_id:
+        session = get_object_or_404(ChatSession, id=session_id, user=request.user)
+    else:
+        # If no session_id is provided, get the most recent session or create a new one
+        session, created = ChatSession.objects.get_or_create(user=request.user, defaults={})
+        if created:
+            return redirect('chat_bot:chat_conversation', session_id=session.id)
 
     if request.method == 'POST':
         user_message_content = request.POST.get('message', '').strip()
@@ -41,15 +34,61 @@ def chat_bot_view(request):
             # 1. 사용자 메시지 저장
             ChatMessage.objects.create(session=session, is_from_user=True, content=user_message_content)
 
-            # 2. RAG 기반 AI 응답 생성
-            ai_response_content = get_rag_response(user_message_content)
+            # 2. LangGraph 챗봇 파이프라인 호출 및 스트리밍
+            def generate_response():
+                ai_response_content = ""
+                try:
+                    # Fetch chat history for context
+                    chat_history_for_llm = []
+                    for msg in session.messages.all().order_by('created_at'):
+                        chat_history_for_llm.append({"role": "user" if msg.is_from_user else "assistant", "content": msg.content})
 
-            # 3. AI 응답 저장
-            ChatMessage.objects.create(session=session, is_from_user=False, content=ai_response_content)
+                    # Pass chat history to the pipeline
+                    for chunk_data in chatbot_pipeline(user_input=user_message_content):
+                        if isinstance(chunk_data, dict):
+                            if chunk_data.get("type") == "image":
+                                yield json.dumps({"type": "image", "content": chunk_data["content"]}) + "\n"
+                                ai_response_content += f"[Image: {chunk_data['content']}]" # Store a placeholder for history
+                            elif chunk_data.get("type") == "text":
+                                content = chunk_data["content"]
+                                ai_response_content += content
+                                yield json.dumps({"type": "text", "content": content}) + "\n"
+                            elif 'generation' in chunk_data: # Fallback for older generation chunks if any
+                                content = chunk_data['generation']
+                                ai_response_content += content
+                                yield json.dumps({"type": "text", "content": content}) + "\n"
+                            else:
+                                print(f"Unexpected dict chunk: {chunk_data}")
+                        elif isinstance(chunk_data, str):
+                            ai_response_content += chunk_data
+                            yield json.dumps({"type": "text", "content": chunk_data}) + "\n"
+                        else:
+                            print(f"Unexpected chunk type: {type(chunk_data)}, content: {chunk_data}")
+
+                except Exception as e:
+                    error_message = f"챗봇 처리 중 오류가 발생했습니다: {e}"
+                    print(f"Error during chatbot_pipeline: {e}")
+                    yield error_message
+                    ai_response_content = error_message # Store error in final response
+
+                # 3. AI 응답 저장 (스트리밍 완료 후)
+                ChatMessage.objects.create(session=session, is_from_user=False, content=ai_response_content)
+
+            return StreamingHttpResponse(generate_response(), content_type='application/x-ndjson')
         
-        return redirect('chat_bot:chat_bot')
+        return JsonResponse({'status': 'error', 'message': 'No message provided'}, status=400)
+
+    # 모든 대화 목록을 가져와 템플릿으로 전달
+    conversations = ChatSession.objects.filter(user=request.user).order_by('-created_at')
 
     # 기존 대화 기록을 가져옵니다.
     chat_history = session.messages.all().order_by('created_at')
 
-    return render(request, 'chat_bot/chat_bot.html', {'chat_history': chat_history})
+    return render(request, 'chat_bot/chat_converation.html', {'chat_history': chat_history, 'session_id': session.id, 'conversations': conversations})
+
+@login_required
+def clear_chat(request):
+    """대화 내용 초기화"""
+    if request.method == 'POST':
+        ChatSession.objects.filter(user=request.user).delete()
+    return redirect('chat_bot:chat_list') # 대화 목록 페이지로 리다이렉트
