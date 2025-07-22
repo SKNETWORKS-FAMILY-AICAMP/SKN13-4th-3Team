@@ -108,103 +108,103 @@
 
 ### 🐥 4. 파일구조
 
-📦SKN13-4th-3Team
- ┣ 📂Qdrant_DB
- ┃ ┣ 📂collection
- ┃ ┃ ┗ 📂InternVL3_vector_store
- ┃ ┃ ┃ ┗ 📜storage.sqlite
- ┃ ┗ 📜meta.json
- ┣ 📂Tools
- ┃ ┗ 📜tools.py
- ┣ 📂accounts
- ┃ ┣ 📂__pycache__
- ┃ ┃ ┣ ...
- ┃ ┣ 📂migrations
- ┃ ┃ ┣ 📂__pycache__
- ┃ ┃ ┃ ┣ 📜0001_initial.cpython-312.pyc
- ┃ ┃ ┃ ┗ 📜__init__.cpython-312.pyc
- ┃ ┃ ┣ 📜0001_initial.py
- ┃ ┃ ┗ 📜__init__.py
- ┃ ┣ 📂templates
- ┃ ┃ ┗ 📂accounts
- ┃ ┃ ┃ ┣ ...
- ┃ ┣ 📜__init__.py
- ┃ ┣ 📜admin.py
- ┃ ┣ 📜apps.py
- ┃ ┣ 📜forms.py
- ┃ ┣ 📜models.py
- ┃ ┣ 📜signals.py
- ┃ ┣ 📜tests.py
- ┃ ┣ 📜urls.py
- ┃ ┗ 📜views.py
- ┣ 📂chat_bot
- ┃ ┣ 📂__pycache__
- ┃ ┃ ┣ ...
- ┃ ┣ 📂migrations
- ┃ ┃ ┣ 📂__pycache__
- ┃ ┃ ┃ ┗ 📜__init__.cpython-312.pyc
- ┃ ┃ ┣ ...
- ┃ ┣ 📂rag
- ┃ ┃ ┣ 📜prompt_template.py
- ┃ ┃ ┗ 📜retriever.py
- ┃ ┣ 📂templates
- ┃ ┃ ┗ 📂chat_bot
- ┃ ┃ ┃ ┣ 📜chat_bot.html
- ┃ ┃ ┃ ┗ 📜chat_converation.html
- ┃ ┣ 📜__init__.py
- ┃ ┣ 📜admin.py
- ┃ ┣ 📜apps.py
- ┃ ┣ 📜models.py
- ┃ ┣ 📜tests.py
- ┃ ┣ 📜urls.py
- ┃ ┗ 📜views.py
- ┣ 📂config
- ┃ ┣ 📂__pycache__
- ┃ ┃ ┣ ...
- ┃ ┣ 📜__init__.py
- ┃ ┣ 📜asgi.py
- ┃ ┣ 📜settings.py
- ┃ ┣ 📜urls.py
- ┃ ┗ 📜wsgi.py
- ┣ 📂data
- ┃ ┗ 📜InternVL3_8B_result_dataset.json
- ┣ 📂images
- ┃ ┗ 📜.DS_Store
- ┣ 📂main
- ┃ ┣ 📂__pycache__
- ┃ ┃ ┣ ...
- ┃ ┣ 📂migrations
- ┃ ┃ ┣ 📂__pycache__
- ┃ ┃ ┃ ┗ 📜__init__.cpython-312.pyc
- ┃ ┃ ┗ 📜__init__.py
- ┃ ┣ 📂templates
- ┃ ┃ ┗ 📂main
- ┃ ┃ ┃ ┣ 📜base.html
- ┃ ┃ ┃ ┗ 📜home.html
- ┃ ┣ 📜__init__.py
- ┃ ┣ 📜admin.py
- ┃ ┣ 📜apps.py
- ┃ ┣ 📜forms.py
- ┃ ┣ 📜models.py
- ┃ ┣ 📜tests.py
- ┃ ┣ 📜urls.py
- ┃ ┗ 📜views.py
- ┣ 📂model_core
- ┃ ┣ ...
- ┣ 📂qdrant
- ┃ ┣ 📜.lock
- ┃ ┗ 📜meta.json
- ┣ 📂templates
- ┃ ┗ 📜base.html
- ┣ 📂Code
- ┃ ┗ 📜
- ┃ ┗ 📜
- ┣ 📜.DS_Store
- ┣ 📜.gitignore
- ┣ 📜README.md
- ┣ 📜db.sqlite3
- ┣ 📜manage.py
- ┗ 📜requirements.txt
+📦SKN13-4th-3Team<br>
+┣ 📂Qdrant_DB<br>
+┃ ┣ 📂collection<br>
+┃ ┃ ┗ 📂InternVL3_vector_store<br>
+┃ ┃ ┃ ┗ 📜storage.sqlite<br>
+┃ ┗ 📜meta.json<br>
+┣ 📂Tools<br>
+┃ ┗ 📜tools.py<br>
+┣ 📂accounts<br>
+┃ ┣ 📂__pycache__<br>
+┃ ┃ ┣ ...<br>
+┃ ┣ 📂migrations<br>
+┃ ┃ ┣ 📂__pycache__<br>
+┃ ┃ ┃ ┣ 📜0001_initial.cpython-312.pyc<br>
+┃ ┃ ┃ ┗ 📜__init__.cpython-312.pyc<br>
+┃ ┃ ┣ 📜0001_initial.py<br>
+┃ ┃ ┗ 📜__init__.py<br>
+┃ ┣ 📂templates<br>
+┃ ┃ ┗ 📂accounts<br>
+┃ ┃ ┃ ┣ ...<br>
+┃ ┣ 📜__init__.py<br>
+┃ ┣ 📜admin.py<br>
+┃ ┣ 📜apps.py<br>
+┃ ┣ 📜forms.py<br>
+┃ ┣ 📜models.py<br>
+┃ ┣ 📜signals.py<br>
+┃ ┣ 📜tests.py<br>
+┃ ┣ 📜urls.py<br>
+┃ ┗ 📜views.py<br>
+┣ 📂chat_bot<br>
+┃ ┣ 📂__pycache__<br>
+┃ ┃ ┣ ...<br>
+┃ ┣ 📂migrations<br>
+┃ ┃ ┣ 📂__pycache__<br>
+┃ ┃ ┃ ┗ 📜__init__.cpython-312.pyc<br>
+┃ ┃ ┣ ...<br>
+┃ ┣ 📂rag<br>
+┃ ┃ ┣ 📜prompt_template.py<br>
+┃ ┃ ┗ 📜retriever.py<br>
+┃ ┣ 📂templates<br>
+┃ ┃ ┗ 📂chat_bot<br>
+┃ ┃ ┃ ┣ 📜chat_bot.html<br>
+┃ ┃ ┃ ┗ 📜chat_converation.html<br>
+┃ ┣ 📜__init__.py<br>
+┃ ┣ 📜admin.py<br>
+┃ ┣ 📜apps.py<br>
+┃ ┣ 📜models.py<br>
+┃ ┣ 📜tests.py<br>
+┃ ┣ 📜urls.py<br>
+┃ ┗ 📜views.py<br>
+┣ 📂config<br>
+┃ ┣ 📂__pycache__<br>
+┃ ┃ ┣ ...<br>
+┃ ┣ 📜__init__.py<br>
+┃ ┣ 📜asgi.py<br>
+┃ ┣ 📜settings.py<br>
+┃ ┣ 📜urls.py<br>
+┃ ┗ 📜wsgi.py<br>
+┣ 📂data<br>
+┃ ┗ 📜InternVL3_8B_result_dataset.json<br>
+┣ 📂images<br>
+┃ ┗ 📜.DS_Store<br>
+┣ 📂main<br>
+┃ ┣ 📂__pycache__<br>
+┃ ┃ ┣ ...<br>
+┃ ┣ 📂migrations<br>
+┃ ┃ ┣ 📂__pycache__<br>
+┃ ┃ ┃ ┗ 📜__init__.cpython-312.pyc<br>
+┃ ┃ ┗ 📜__init__.py<br>
+┃ ┣ 📂templates<br>
+┃ ┃ ┗ 📂main<br>
+┃ ┃ ┃ ┣ 📜base.html<br>
+┃ ┃ ┃ ┗ 📜home.html<br>
+┃ ┣ 📜__init__.py<br>
+┃ ┣ 📜admin.py<br>
+┃ ┣ 📜apps.py<br>
+┃ ┣ 📜forms.py<br>
+┃ ┣ 📜models.py<br>
+┃ ┣ 📜tests.py<br>
+┃ ┣ 📜urls.py<br>
+┃ ┗ 📜views.py<br>
+┣ 📂model_core<br>
+┃ ┣ ...<br>
+┣ 📂qdrant<br>
+┃ ┣ 📜.lock<br>
+┃ ┗ 📜meta.json<br>
+┣ 📂templates<br>
+┃ ┗ 📜base.html<br>
+┣ 📂Code<br>
+┃ ┗ 📜<br>
+┃ ┗ 📜<br>
+┣ 📜.DS_Store<br>
+┣ 📜.gitignore<br>
+┣ 📜README.md<br>
+┣ 📜db.sqlite3<br>
+┣ 📜manage.py<br>
+┗ 📜requirements.txt<br>
 
 
 
