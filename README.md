@@ -15,13 +15,13 @@
 <table>
   <tr>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/d2c2cde2-2ea0-4b34-a1a5-5a226b25fe75" width="100"/><br/>기원준🥚
+      <img src="https://github.com/user-attachments/assets/50dc49bf-6b22-46f4-b98b-ca471b23e5e7" width="100"/><br/>기원준🥚
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/b3003734-50d5-4a7c-93a0-468345b23d1a" width="100"/><br/>전진혁🐣
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/f95f92ef-b243-4101-bfc5-57a259a40a2e" width="60"/><br/>강지윤🐥
+      <img src="https://github.com/user-attachments/assets/85c59737-8172-4319-ac86-f1a766d83dab" width="100"/><br/>강지윤🐥
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/7d5d501e-a319-4704-8f15-e593fcf2f90f" width="100"/><br/>최호연🐓
@@ -42,7 +42,7 @@
     </td>    <td align="center">
       <a href="https://github.com/oowixj819"><img src="https://img.shields.io/badge/GitHub-oowixj819-1F1F1F?logo=github" alt="최호연 GitHub"/></a>
     </td>    <td align="center">
-      <a href="https://github.com/mingyu-oo"><img src="https://img.shields.io/badge/GitHub-mingyu-oo-1F1F1F?logo=github" alt="우민규 GitHub"/></a>
+      <a href="https://github.com/mingyu-oo"><img src="https://img.shields.io/badge/GitHub-mingyu--oo-1F1F1F?logo=github" alt="우민규 GitHub"/></a>
     </td>
 </table>
 
