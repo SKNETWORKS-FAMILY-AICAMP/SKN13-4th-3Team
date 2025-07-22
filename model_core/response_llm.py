@@ -48,22 +48,27 @@ def response_node(state: GraphState) -> Iterator[str]:
             else:
                 response_content = os.path.basename(state.image_search_result)
         state.final_response = response_content
-        yield response_content # Yield the entire response at once for image search
+        if state.image_search_result and str(state.image_search_result).startswith("http"):
+            yield {"type": "image", "content": state.image_search_result}
+        elif state.image_gen_result:
+            yield {"type": "image", "content": os.path.basename(state.image_gen_result)}
+        else:
+            yield {"type": "text", "content": response_content}
     elif state.intent == "faq_rag":
         info = f"FAQ 답변: {state.faq_rag_result}"
         prompt = prompt_template.format_messages(user_input=state.user_input, info=info)
         for chunk in llm.stream(prompt):
             content = chunk.content or ""
             state.final_response += content
-            yield content
+            yield {"type": "text", "content": content}
     elif state.intent == "general":
         info = state.general_result
         prompt = prompt_template.format_messages(user_input=state.user_input, info=info)
         for chunk in llm.stream(prompt):
             content = chunk.content or ""
             state.final_response += content
-            yield content
+            yield {"type": "text", "content": content}
     else:
         response_content = "적절한 답변을 찾지 못했습니다."
         state.final_response = response_content
-        yield response_content 
+        yield {"type": "text", "content": response_content} 

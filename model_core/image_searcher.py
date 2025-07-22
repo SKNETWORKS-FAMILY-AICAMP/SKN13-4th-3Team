@@ -28,7 +28,7 @@ def image_search_node(state: GraphState) -> GraphState:
         )
         if search_result:
             hit = search_result[0]
-            state.image_search_result = hit.payload.get("url", "[url 없음]")
+            state.image_search_result = hit.metadata.get("url", "[url 없음]")
             state.image_search_similarity = hit.score
         else:
             state.image_search_result = None
