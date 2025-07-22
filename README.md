@@ -64,7 +64,9 @@ McKinsey 다이아몬드 모델은 다음과 같은 단계로 UX와 SX를 치밀
 <p align="center">
   <img src="https://github.com/user-attachments/assets/b034b1db-eec1-4ca5-8670-25f8ad43f80e" width="600" />
 </p>
-<이미지 출처: https://www.mckinsey.com/industries/metals-and-mining/our-insights/the-diamond-industry-is-at-an-inflection-point><br>
+<p align="center">
+  <sub><i>이미지 출처: https://www.mckinsey.com/industries/metals-and-mining/our-insights/the-diamond-industry-is-at-an-inflection-point</i></sub>
+</p>
 
 ‼️ 그러나, 현실에서는 이 모든 단계를 디자이너가 직접 하나하나 수행할 경우, **시간적·비용적 부담**이 크게 발생하며, 여러 아이디어를 시도해볼 기회도 제한됨<br> 
     - 이는 프로토타입을 빠르게 반복 제작하고 실험할 여유가 부족해지면서, 혁신적인 아이디어의 실현 가능성도 줄어들게 됨. <br>
@@ -76,8 +78,12 @@ McKinsey 다이아몬드 모델은 다음과 같은 단계로 UX와 SX를 치밀
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/2accb349-f1bd-42c4-8c95-e50f0dfd93d3" width="500" />
-</p> <이미지 출처: https://www.jungle.co.kr/magazine/6728><br>
+</p> <p align="center">
+  <sub><i>이미지 출처: https://www.jungle.co.kr/magazine/6728</i></sub>
+</p>
+  
 ---
+
 #### 1.2.🛠️ 개발 목표  
 
 본 프로젝트는 이러한 문제를 해결하고자:
@@ -151,8 +157,6 @@ McKinsey 다이아몬드 모델은 다음과 같은 단계로 UX와 SX를 치밀
 | 📁 협업 및 형상 관리       | <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white" /> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white" />  
 
 
-
-
 ## 🐥 3. 요구사항 명세서
 
 
@@ -166,8 +170,6 @@ McKinsey 다이아몬드 모델은 다음과 같은 단계로 UX와 SX를 치밀
 | BAB-004     | 비기능   | 보안           | 안전해야 함.                                               | 상     |        | 수용     |
 | BAB-005     | 비기능   | 성능           | 응답 시간이 2초 이내여야 함.                               | 하     |        | 수용     |
 | BAB-006     | 기능     | 프로필 수정    | 닉네임, 이메일 수정이 가능해야 함.                         | 중     |        | 수용     |
-
-
 
 
 ### 🐥 4. 파일구조
@@ -251,12 +253,71 @@ McKinsey 다이아몬드 모델은 다음과 같은 단계로 UX와 SX를 치밀
  ### 🐥 5. 데이터 수집 및 전처리
 
 
-
-
  🏷️ **메타데이터 태깅 기준**
+- Qdrant 벡터DB에 넣을 문서 데이터를 구성할 때,  
+자동차 설명(description) 데이터와 사용자 피드백(review) 데이터를 각각 전처리하고,  
+메타데이터로 태깅하여 검색·추천에 활용할 수 있도록 설계
 
+#### 🚗 1️⃣ Description Vector DB (`description_vector_store`)
 
+**데이터 소스**  
+- `hyundaicar_descript_merge_all.json`
 
+**주요 전처리 및 태깅**
+- 자동차 이름 처리  
+  - `car_name_en`: 영문 이름 (`_` 제거, `strip()`)  
+  - `car_name_kr`: 영문 이름에서 'Hybrid' → '하이브리드'로 변환
+
+- 설명 텍스트에서 영어 키워드 추출  
+  - 키워드 목록: `["sleek", "modern", "aerodynamic", "SUV", "sedan", "electric", "hybrid", "dynamic", "spacious", "luxury"]`  
+  - `CountVectorizer`로 등장 키워드만 추출
+
+- **최종 메타데이터 예시**
+  ```json
+  {
+    "description_keywords": ["sleek", "SUV"],
+    "url": "image_path"
+  }
+
+#### 📝 2️⃣ Feedback Vector DB (`feedback_vector_store`)
+
+**데이터 소스**  
+- `hyundai_car_reviews.json`
+
+---
+
+**주요 전처리 및 태깅**
+
+- 🚗 **자동차 이름 처리**  
+  - `car_name_kr`: 한글 이름 (`strip()`)  
+  - `car_name_en`: 한글 이름에서 공백 제거, `'하이브리드' → 'Hybrid'`로 변환
+
+- 🏷️ **리뷰 텍스트에서 한글 키워드 추출**  
+  - 키워드 목록:  
+    `["연비", "주행감", "실내공간", "디자인", "하이브리드", "정숙성", "가속", "승차감", "가격", "안전성"]`  
+  - 포함 여부 단순 필터링
+
+- 🔢 **리뷰 길이 계산**  
+  - `len(review_text)`
+
+- 🗂️ **tags 딕셔너리 평탄화**
+  ```python
+  # 예시
+  { "option": "파노라마 선루프", "color": "화이트" }
+  → { "tags_option": "파노라마 선루프", "tags_color": "화이트" }
+
+#### 📦 공통 처리
+
+✂️ **문서 쪼개기 (Text Splitting)**  
+- `RecursiveCharacterTextSplitter` 사용  
+  `chunk_size=300`, `chunk_overlap=30`
+
+🧠 **벡터 임베딩**  
+- `OpenAIEmbeddings(model="text-embedding-3-large")`
+
+💾 **Qdrant 저장**  
+- 벡터 차원 (`EMBEDDING_DIM`): `3072`  
+- 거리 계산 방식: `cosine`
 
 
  ### 🐥 6. RAG 기반 챗봇 구현🤖
@@ -285,6 +346,6 @@ McKinsey 다이아몬드 모델은 다음과 같은 단계로 UX와 SX를 치밀
 
  - 🥚기원준: AWS EC2 "Legend Server"
  - 🐣전진혁: docker master
- - 🐥강지윤: 
- - 🐓최호연: 
+ - 🐥강지윤: "image to text" InternVL3 master 
+ - 🐓최호연: django master
  - 🍗우민규: README를 잘 읽자
