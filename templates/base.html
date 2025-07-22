@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}기업 특화 이미지 생성 AI{% endblock %}</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body class="bg-black text-white min-h-screen flex flex-col">
+
+    <header class="bg-black shadow-md py-4 px-8 flex justify-between items-center w-full border-b border-gray-700">
+        <h1 class="text-xl font-bold">
+            <a href="{% url 'main:home' %}" class="hover:text-gray-300 transition">🚗Babsim AI</a>
+        </h1>
+        <nav class="space-x-4 flex items-center">
+            <a href="{% url 'main:home' %}" class="text-gray-300 hover:text-white transition">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'accounts:profile' %}" class="text-gray-300 hover:text-white transition">My Page</a>
+                <a href="{% url 'accounts:logout' %}" class="text-gray-300 hover:text-white transition">Logout</a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="px-4 py-2 border border-white rounded-full text-white hover:bg-white hover:text-black transition">Login</a>
+                <a href="{% url 'accounts:signup' %}" class="px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition">Signup</a>
+            {% endif %}
+            <a href="{% url 'chat_bot:chat_bot' %}" class="text-gray-300 hover:text-white transition">Chatbot</a>
+        </nav>
+    </header>
+
+    <main class="w-full py-8 px-4 flex-grow">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-gray-900 text-center py-4 text-sm text-gray-400 w-full">
+        &copy; Team Babsim AI. All rights reserved.
+    </footer>
+
+</body>
+</html>

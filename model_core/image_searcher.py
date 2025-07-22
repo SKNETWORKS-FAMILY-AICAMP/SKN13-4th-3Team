@@ -1,10 +1,10 @@
-from graph_state import GraphState
+from model_core.graph_state import GraphState
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 from langchain_openai import OpenAIEmbeddings
 from pathlib import Path
 from dotenv import load_dotenv
-
+import os
 load_dotenv()
 HOST = os.getenv("HOST_PUBLIC_IP")
 

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}홈 | Babsim{% endblock %}
+
+{% block content %}
+<div class="min-h-screen w-full bg-gradient-to-br from-black via-gray-900 to-black flex flex-col items-center justify-center px-6 py-16">
+
+    <h1 class="text-4xl sm:text-6xl font-extrabold text-white text-center mb-8 w-full">
+        Design, Philosophy, Experience <br>
+        — Connected by AI
+    </h1>
+
+    <p class="text-gray-300 text-lg sm:text-2xl text-center mb-12 w-full max-w-5xl">
+        AI와 디자인, 그 이상을 담다. <br>
+        현대자동차 디자이너들을 위해, AI는 단순한 디자인을 넘어 브랜드의 심장과 사용자 경험까지 이해합니다.
+    </p>
+
+    <a href="{% url 'chat_bot:chat_bot' %}"
+       class="inline-block bg-white text-black py-4 px-12 rounded-full font-semibold text-lg shadow-lg hover:bg-gray-200 transform hover:-translate-y-1 transition">
+        🚀 Start Chatbot
+    </a>
+
+</div>
+{% endblock %}

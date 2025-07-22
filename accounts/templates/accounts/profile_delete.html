@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-md mx-auto mt-10">
+  <h2 class="text-xl font-semibold mb-4">회원 탈퇴 확인</h2>
+  <p class="mb-2">정확하게 <strong>"계정을 탈퇴합니다."</strong>라고 입력해 주세요.</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.text }}
+    <button type="submit" class="mt-4 bg-red-500 text-white py-2 px-4 rounded">탈퇴하기</button>
+  </form>
+</div>
+{% endblock %}

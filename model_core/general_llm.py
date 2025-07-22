@@ -1,4 +1,4 @@
-from graph_state import GraphState
+from model_core.graph_state import GraphState
 import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI

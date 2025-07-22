@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}로그인{% endblock %}
+
+{% block content %}
+
+<div class="min-h-screen w-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
+  <div class="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-xl p-8 shadow-2xl">
+
+    <!-- Logo Section -->
+    <div class="flex justify-center mb-8">
+      <img src="https://cdn.startupful.io/img/app_logo/no_img.png" alt="Logo" class="h-12 w-12 rounded-full shadow-lg">
+    </div>
+
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+      <p class="text-gray-200">Sign in to your account</p>
+    </div>
+
+    <!-- Form Section -->
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+      <div>
+        <label class="block text-gray-200 text-sm font-medium mb-2">Username</label>
+        <input type="text" name="username" required class="w-full px-4 py-3 bg-white/20 border border-gray-200/20 rounded-lg text-white placeholder-gray-300" placeholder="Enter your username">
+      </div>
+
+      <div>
+        <label class="block text-gray-200 text-sm font-medium mb-2">Password</label>
+        <input type="password" name="password" required class="w-full px-4 py-3 bg-white/20 border border-gray-200/20 rounded-lg text-white placeholder-gray-300" placeholder="Enter your password">
+      </div>
+
+      <div class="flex items-center justify-between">
+        <label class="flex items-center text-sm text-gray-200">
+          <input type="checkbox" class="mr-2 rounded" />
+          Remember me
+        </label>
+        <a href="#" class="text-sm text-gray-200 hover:text-white">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="w-full py-3 px-4 bg-white text-indigo-600 rounded-lg font-medium hover:bg-gray-50">
+        Sign In
+      </button>
+    </form>
+
+    <!-- Sign Up Link -->
+    <p class="mt-8 text-center text-sm text-gray-200">
+      Don't have an account?
+      <a href="{% url 'accounts:signup' %}" class="font-medium text-white hover:text-gray-100">Sign up now</a>
+    </p>
+  </div>
+</div>
+
+{% endblock %}

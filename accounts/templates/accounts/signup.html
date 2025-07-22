@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}회원가입 | Babsim{% endblock %}
+
+{% block content %}
+<div class="min-h-screen w-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
+  <div class="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl">
+
+    <!-- 아이콘 섹션 -->
+    <div class="flex justify-center mb-6">
+        <div class="w-16 h-16 flex items-center justify-center rounded-full bg-white/20 shadow-lg">
+            <i class="fas fa-user-plus text-white text-3xl"></i>
+        </div>
+    </div>
+
+    <!-- 헤더 섹션 -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-white mb-2">Create Account</h1>
+      <p class="text-gray-200">새로운 계정을 만들어 시작하세요</p>
+    </div>
+
+    <!-- 회원가입 폼 -->
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      
+      {# 각 필드를 직접 렌더링하여 스타일 적용 #}
+      {% for field in form %}
+      <div>
+        <label for="{{ field.id_for_label }}" class="block text-gray-200 text-sm font-medium mb-2">{{ field.label }}</label>
+        <input type="{{ field.field.widget.input_type }}" 
+               name="{{ field.name }}" 
+               id="{{ field.id_for_label }}"
+               required 
+               class="w-full px-4 py-3 bg-white/20 border border-gray-200/20 rounded-lg text-white placeholder-gray-300 focus:ring-white focus:border-white" 
+               placeholder="{{ field.label }} 입력">
+        
+        {# 필드 에러 메시지 표시 #}
+        {% if field.errors %}
+            <p class="text-red-400 text-xs mt-1">{{ field.errors.0 }}</p>
+        {% endif %}
+      {% endfor %}
+
+      <button type="submit" class="w-full py-3 mt-6 px-4 bg-white text-indigo-600 rounded-lg font-bold hover:bg-gray-100 transition-colors duration-300">
+        Sign Up
+      </button>
+    </form>
+
+    <!-- 로그인 링크 -->
+    <p class="mt-8 text-center text-sm text-gray-200">
+      이미 계정이 있으신가요?
+      <a href="{% url 'accounts:login' %}" class="font-medium text-white hover:text-gray-100">로그인</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

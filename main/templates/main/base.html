@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}기업 특화 이미지 생성 AI{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white">
+
+<header class="bg-black shadow p-4 flex justify-between items-center w-full">
+    <h1 class="text-xl font-bold">
+        <a href="{% url 'main:home' %}" class="hover:text-gray-300 transition">🚗 Babsim AI</a>
+    </h1>
+    
+    <nav class="flex items-center space-x-6">
+        <a href="{% url 'main:home' %}" class="font-medium text-gray-300 hover:text-white transition">Home</a>
+        <a href="{% url 'chat_bot:chat_bot' %}" class="font-medium text-gray-300 hover:text-white transition">Chatbot</a>
+
+        {% if user.is_authenticated %}
+        <div class="flex items-center space-x-4 border-l border-gray-700 pl-4">
+            <a href="{% url 'accounts:logout' %}" class="font-medium text-gray-300 hover:text-white transition">Logout</a>
+            <div class="flex items-center space-x-2">
+                <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="w-8 h-8 rounded-full object-cover border border-gray-500">
+                <span class="font-semibold">{{ user.username }}</span>
+            </div>
+        </div>
+        {% else %}
+        <a href="{% url 'accounts:login' %}" class="px-4 py-2 border border-white rounded-full font-medium text-white hover:bg-white hover:text-black transition">Login</a>
+        <a href="{% url 'accounts:signup' %}" class="px-4 py-2 bg-white text-black rounded-full font-semibold hover:bg-gray-200 transition">Signup</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main class="w-full p-4">
+    {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>

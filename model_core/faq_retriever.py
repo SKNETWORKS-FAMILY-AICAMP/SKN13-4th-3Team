@@ -1,4 +1,4 @@
-from graph_state import GraphState
+from model_core.graph_state import GraphState
 from qdrant_client import QdrantClient
 from pathlib import Path
 import os

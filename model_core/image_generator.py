@@ -1,7 +1,7 @@
 import os
 import re
 import time
-from graph_state import GraphState
+from model_core.graph_state import GraphState
 from google.cloud import translate_v2 as translate
 from diffusers import StableDiffusionPipeline
 import torch
