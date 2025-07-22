@@ -47,3 +47,197 @@
 </table>
 
 
+### 🐥 1. 프로젝트 개요
+
+#### 1.1. 개발 동기 및 목적  
+
+
+
+
+
+
+
+#### 1.2. 본 챗봇의 차별성
+
+
+
+
+
+
+
+#### 1.3. 개발 목표  
+
+
+
+
+
+
+### 🐥 2. 기술 스택
+| **분야**              | **기술 및 라이브러리**                                                                                                                                                                                                                            |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🖥️ 프로그래밍 언어 & 개발환경 | <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white" /> <img src="https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=VisualStudioCode&logoColor=white" />            |
+| 🔗 LLM 체인 및 워크플로우   | <img src="https://img.shields.io/badge/LangChain-005F73?style=for-the-badge&logo=LangChain&logoColor=white" /> <img src="https://img.shields.io/badge/LangGraph-000000?style=for-the-badge&logo=LangChain&logoColor=white" />             |
+| 🧠 LLM 모델           | <img src="https://img.shields.io/badge/OpenAI%20GPT--4.1-412991?style=for-the-badge&logo=OpenAI&logoColor=white" /> <img src="https://img.shields.io/badge/OpenAI%20Embeddings-10A37F?style=for-the-badge&logo=OpenAI&logoColor=white" /> |
+| 🖼️ 사용한 모델        | <img src="https://img.shields.io/badge/InternVL3--8B-FF6F61?style=for-the-badge&logo=OpenAI&logoColor=white" /> <img src="https://img.shields.io/badge/stable--diffusion--v1--5-4F8A8B?style=for-the-badge&logo=StableDiffusion&logoColor=white" /> |
+| 📄 문서 로딩 및 전처리      | <img src="https://img.shields.io/badge/PyMuPDF-00599C?style=for-the-badge&logo=AdobeAcrobatReader&logoColor=white" /> <img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" />            |
+| 📦 벡터 저장소 및 임베딩     | <img src="https://img.shields.io/badge/qdrant-E34F26?style=for-the-badge&logo=qdrant&logoColor=white">                                                                                                                                |
+| 🌐 데이터 수집           | <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=Selenium&logoColor=white" /> <img src="https://img.shields.io/badge/requests-7A88CF?style=for-the-badge&logo=Python&logoColor=white" />                   |
+| 🔐 환경 변수 및 설정 관리    | <img src="https://img.shields.io/badge/python_dotenv-000000?style=for-the-badge&logo=Python&logoColor=white" />                                                                                                                           |
+| 💬 메시지 및 커뮤니케이션     | <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white" />                                                                                                                                |
+| 📁 협업 및 형상 관리       | <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white" /> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"
+
+
+
+
+## 🐥 3. 요구사항 명세서
+
+
+### 기능 요구사항 (Functional Requirements)
+
+| 요구사항 ID | 기능유형 | 요구사항명      | 요구사항 내용                                               | 중요도 | 담당자 | 수용여부 |
+| :---------: | :------: | :------------- | :--------------------------------------------------------- | :----: | :----: | :------: |
+| BAB-001     | 기능     | 회원관리       | 회원 가입, 로그인, 정보 수정, 탈퇴 등의 기능을 제공해야 함. | 상     |        | 수용     |
+| BAB-002     | 기능     | 챗봇           | 일반 질문, 이미지 검색의 기능을 제공해야 함.               | 상     |        | 수용     |
+| BAB-003     | 비기능   | 반응형 디자인  | 디바이스 크기에 맞춰 디스플레이를 자동조정해야 함.         | 상     |        | 수용     |
+| BAB-004     | 비기능   | 보안           | 안전해야 함.                                               | 상     |        | 수용     |
+| BAB-005     | 비기능   | 성능           | 응답 시간이 2초 이내여야 함.                               | 하     |        | 수용     |
+| BAB-006     | 기능     | 프로필 수정    | 닉네임, 이메일 수정이 가능해야 함.                         | 중     |        | 수용     |
+
+
+
+
+### 🐥 4. 파일구조
+
+📦SKN13-4th-3Team
+ ┣ 📂Qdrant_DB
+ ┃ ┣ 📂collection
+ ┃ ┃ ┗ 📂InternVL3_vector_store
+ ┃ ┃ ┃ ┗ 📜storage.sqlite
+ ┃ ┗ 📜meta.json
+ ┣ 📂Tools
+ ┃ ┗ 📜tools.py
+ ┣ 📂accounts
+ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┣ ...
+ ┃ ┣ 📂migrations
+ ┃ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┃ ┣ 📜0001_initial.cpython-312.pyc
+ ┃ ┃ ┃ ┗ 📜__init__.cpython-312.pyc
+ ┃ ┃ ┣ 📜0001_initial.py
+ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┣ 📂templates
+ ┃ ┃ ┗ 📂accounts
+ ┃ ┃ ┃ ┣ ...
+ ┃ ┣ 📜__init__.py
+ ┃ ┣ 📜admin.py
+ ┃ ┣ 📜apps.py
+ ┃ ┣ 📜forms.py
+ ┃ ┣ 📜models.py
+ ┃ ┣ 📜signals.py
+ ┃ ┣ 📜tests.py
+ ┃ ┣ 📜urls.py
+ ┃ ┗ 📜views.py
+ ┣ 📂chat_bot
+ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┣ ...
+ ┃ ┣ 📂migrations
+ ┃ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┃ ┗ 📜__init__.cpython-312.pyc
+ ┃ ┃ ┣ ...
+ ┃ ┣ 📂rag
+ ┃ ┃ ┣ 📜prompt_template.py
+ ┃ ┃ ┗ 📜retriever.py
+ ┃ ┣ 📂templates
+ ┃ ┃ ┗ 📂chat_bot
+ ┃ ┃ ┃ ┣ 📜chat_bot.html
+ ┃ ┃ ┃ ┗ 📜chat_converation.html
+ ┃ ┣ 📜__init__.py
+ ┃ ┣ 📜admin.py
+ ┃ ┣ 📜apps.py
+ ┃ ┣ 📜models.py
+ ┃ ┣ 📜tests.py
+ ┃ ┣ 📜urls.py
+ ┃ ┗ 📜views.py
+ ┣ 📂config
+ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┣ ...
+ ┃ ┣ 📜__init__.py
+ ┃ ┣ 📜asgi.py
+ ┃ ┣ 📜settings.py
+ ┃ ┣ 📜urls.py
+ ┃ ┗ 📜wsgi.py
+ ┣ 📂data
+ ┃ ┗ 📜InternVL3_8B_result_dataset.json
+ ┣ 📂images
+ ┃ ┗ 📜.DS_Store
+ ┣ 📂main
+ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┣ ...
+ ┃ ┣ 📂migrations
+ ┃ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┃ ┗ 📜__init__.cpython-312.pyc
+ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┣ 📂templates
+ ┃ ┃ ┗ 📂main
+ ┃ ┃ ┃ ┣ 📜base.html
+ ┃ ┃ ┃ ┗ 📜home.html
+ ┃ ┣ 📜__init__.py
+ ┃ ┣ 📜admin.py
+ ┃ ┣ 📜apps.py
+ ┃ ┣ 📜forms.py
+ ┃ ┣ 📜models.py
+ ┃ ┣ 📜tests.py
+ ┃ ┣ 📜urls.py
+ ┃ ┗ 📜views.py
+ ┣ 📂model_core
+ ┃ ┣ ...
+ ┣ 📂qdrant
+ ┃ ┣ 📜.lock
+ ┃ ┗ 📜meta.json
+ ┣ 📂templates
+ ┃ ┗ 📜base.html
+ ┣ 📂Code
+ ┃ ┗ 📜
+ ┃ ┗ 📜
+ ┣ 📜.DS_Store
+ ┣ 📜.gitignore
+ ┣ 📜README.md
+ ┣ 📜db.sqlite3
+ ┣ 📜manage.py
+ ┗ 📜requirements.txt
+
+
+
+
+ ### 🐥 5. 데이터 수집 및 전처리
+
+
+
+
+ 🏷️ **메타데이터 태깅 기준**
+
+
+
+
+
+ ### 🐥 6. RAG 기반 챗봇 구현🤖
+
+
+ 🔧**시스템 아키텍처**<br>
+<img src="https://github.com/user-attachments/assets/3674399e-9305-4713-8e79-f35bf0148dfc" width="800" alt="system"> <br>
+
+
+
+
+### 🐥 7. 챗봇 구현 화면
+
+
+
+
+### 🐥 8. 한줄 회고
+
+ - 🥚기원준: AWS EC2 "Legend Server"
+ - 🐣전진혁: docker master
+ - 🐥강지윤: 
+ - 🐓최호연: 
+ - 🍗우민규: README를 잘 읽자
