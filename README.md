@@ -84,7 +84,7 @@
 | 🌐 데이터 수집           | <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=Selenium&logoColor=white" /> <img src="https://img.shields.io/badge/requests-7A88CF?style=for-the-badge&logo=Python&logoColor=white" />                   |
 | 🔐 환경 변수 및 설정 관리    | <img src="https://img.shields.io/badge/python_dotenv-000000?style=for-the-badge&logo=Python&logoColor=white" />                                                                                                                           |
 | 💬 메시지 및 커뮤니케이션     | <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white" />                                                                                                                                |
-| 📁 협업 및 형상 관리       | <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white" /> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"
+| 📁 협업 및 형상 관리       | <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white" /> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white" />  
 
 
 
