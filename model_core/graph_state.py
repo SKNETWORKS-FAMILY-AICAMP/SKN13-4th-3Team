@@ -8,5 +8,6 @@ class GraphState(BaseModel):
     image_search_similarity: Optional[float] = None
     image_gen_result: Optional[str] = None
     faq_rag_result: Optional[str] = None
+    faq_rag_similarity: Optional[str] = None
     general_result: Optional[str] = None
     final_response: Optional[str] = None 

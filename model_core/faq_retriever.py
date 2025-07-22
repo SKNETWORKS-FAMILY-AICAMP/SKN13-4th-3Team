@@ -3,19 +3,19 @@ from qdrant_client import QdrantClient
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain.prompts import ChatPromptTemplate
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+HOST = os.getenv("HOST_PUBLIC_IP")
 
-QDRANT_PATH = Path("qdrant")  # 원하는 경로로 변경 가능
-COLLECTION_NAME = "hyundaicar_embeddings"
+QDRANT_PATH = Path("qdrant_storage")  # 원하는 경로로 변경 가능
+COLLECTION_NAME = "feedback_vector_store"
 
-qdrant = QdrantClient(
-    path=QDRANT_PATH,
-    prefer_grpc=False  # 로컬 파일 DB 모드 필수
-)
+embedding_model = OpenAIEmbeddings(model="text-embedding-3-large")
+
+qdrant = QdrantClient(host=HOST, port="6333")
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
@@ -35,9 +35,10 @@ prompt_template = ChatPromptTemplate.from_messages([
 
 def faq_rag_node(state: GraphState) -> GraphState:
     try:
+        embedding = embedding_model.embed_query(state.user_input)
         search_result = qdrant.search(
             collection_name=COLLECTION_NAME,
-            query_vector=state.user_input,  # 이미 임베딩된 벡터라면 벡터로 전달해야 함
+            query_vector=embedding,  # 이미 임베딩된 벡터라면 벡터로 전달해야 함
             limit=3,
             with_payload=True
         )

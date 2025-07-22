@@ -24,6 +24,7 @@ build/
 # 데이터/이미지/모델
 /data/
 !data/.gitkeep
+qdrant_storage/
 
 # 생성 이미지(폴더 내 파일은 무시, 폴더는 유지)
 data/generated_images/*
@@ -45,3 +46,6 @@ Thumbs.db
 
 # pip wheel
 *.whl
+
+# Key
+wide-oasis-466610-k4-4623225c7c32.json
