@@ -1,22 +1,24 @@
-from .graph_state import GraphState
+from model_core.graph_state import GraphState
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
+from langchain_openai import OpenAIEmbeddings
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+load_dotenv()
+HOST = os.getenv("HOST_PUBLIC_IP")
 
 # 모델 및 Qdrant 클라이언트 초기화 (최적화 위해 전역에서 1회만)
-model = SentenceTransformer('jhgan/ko-sroberta-multitask')
-QDRANT_PATH = Path("qdrant")  # 원하는 경로로 변경 가능
-COLLECTION_NAME = "hyundaicar_embeddings"
+embedding_model = OpenAIEmbeddings(model="text-embedding-3-large")
+QDRANT_PATH = Path("qdrant_storage")  # 원하는 경로로 변경 가능 
+COLLECTION_NAME = "description_vector_store"
 
-qdrant = QdrantClient(
-    path=QDRANT_PATH,
-    prefer_grpc=False  # 로컬 파일 DB 모드 필수
-)
+qdrant = QdrantClient(host=HOST, port="6333")
 
 def image_search_node(state: GraphState) -> GraphState:
     try:
         # 1. 입력 문장 임베딩
-        embedding = model.encode(state.user_input).tolist()
+        embedding = embedding_model.embed_query(state.user_input)
         # 2. Qdrant에서 top_k 유사 이미지 검색
         search_result = qdrant.search(
             collection_name=COLLECTION_NAME,

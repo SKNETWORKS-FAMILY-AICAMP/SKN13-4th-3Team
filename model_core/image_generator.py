@@ -1,14 +1,16 @@
 import os
 import re
 import time
-from .graph_state import GraphState
+from model_core.graph_state import GraphState
 from google.cloud import translate_v2 as translate
 from diffusers import StableDiffusionPipeline
 import torch
 from dotenv import load_dotenv
 
 load_dotenv()
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
 
 # 데이터 폴더 생성
 DATA_DIR = os.path.join(os.path.dirname(__file__), "../data/generated_images")
@@ -31,7 +33,7 @@ def prompt_to_filename(prompt_en: str) -> str:
 
 def translate_ko_to_en(text):
     try:
-        client = translate.Client(api_key=GOOGLE_API_KEY)
+        client = translate.Client()
         result = client.translate(text, source_language='ko', target_language='en')
         return result['translatedText']
     except Exception as e:

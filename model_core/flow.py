@@ -1,12 +1,13 @@
-from .graph_state import GraphState
-from .intent_router import route_intent
-from .image_searcher import image_search_node
-from .image_generator import image_gen_node
-from .faq_retriever import faq_rag_node
-from .general_llm import general_node
-from .response_llm import response_node
+from model_core.graph_state import GraphState
+from model_core.intent_router import route_intent
+from model_core.image_searcher import image_search_node
+from model_core.image_generator import image_gen_node
+from model_core.faq_retriever import faq_rag_node
+from model_core.general_llm import general_node
+from model_core.response_llm import response_node
+from typing import Iterator
 
-def chatbot_pipeline(user_input: str) -> GraphState:
+def chatbot_pipeline(user_input: str) -> Iterator[str]:
     state = GraphState(user_input=user_input)
     # 1. intent 분석
     state = route_intent(state)
@@ -22,5 +23,6 @@ def chatbot_pipeline(user_input: str) -> GraphState:
     else:
         state = general_node(state)
     # 3. 항상 마지막에 response_node 호출
-    state = response_node(state)
-    return state 
+    # response_node에서 yield되는 각 청크를 다시 yield
+    for chunk in response_node(state):
+        yield chunk 
