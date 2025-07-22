@@ -179,3 +179,11 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 .env
+
+# VectorDB
+Qdrant_DB/
+qdrant/
+qdrant_storage/
+
+# translation model key
+wide-oasis-466610-k4-4623225c7c32.json

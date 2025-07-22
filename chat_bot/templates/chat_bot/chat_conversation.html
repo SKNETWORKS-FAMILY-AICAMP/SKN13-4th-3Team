@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AI 챗봇 | Babsim{% endblock %}
+
+{% block content %}
+<style>
+    @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up { animation: fadeInUp 0.5s ease forwards; }
+</style>
+
+<div class="flex h-screen bg-black">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 border-r border-gray-700 flex flex-col">
+        <div class="p-4 border-b border-gray-700">
+            <h2 class="text-xl font-bold text-white">내 대화</h2>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 space-y-2">
+            <a href="{% url 'chat_bot:new_chat_session' %}" class="block w-full bg-blue-600 text-white py-2 px-4 rounded-md text-center hover:bg-blue-700 transition">
+                <i class="fas fa-plus mr-2"></i>새로운 대화
+            </a>
+            {% for conversation in conversations %}
+                <a href="{% url 'chat_bot:chat_conversation_with_id' session_id=conversation.id %}" class="block p-3 rounded-md {% if conversation.id == session_id %}bg-gray-700{% else %}text-gray-300 hover:bg-gray-800{% endif %} transition">
+                    <p class="text-sm font-semibold text-white truncate">{{ conversation.messages.first.content|default:"새로운 대화" }}</p>
+                    <p class="text-xs text-gray-400">{{ conversation.created_at|date:"Y-m-d H:i" }}</p>
+                </a>
+            {% empty %}
+                <p class="text-gray-500 text-sm text-center">아직 대화가 없습니다.</p>
+            {% endfor %}
+        </div>
+        <div class="p-4 border-t border-gray-700">
+            <a href="{% url 'chat_bot:chat_list' %}" class="text-gray-300 hover:text-white block text-center">
+                <i class="fas fa-home mr-2"></i>홈으로
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main chat area -->
+    <div class="flex flex-col flex-1">
+        <!-- Header -->
+        <header class="bg-black border-b border-gray-700 p-4">
+            <h1 class="text-2xl font-bold text-white">AI 자동차 디자이너</h1>
+        </header>
+
+        <!-- Chat container -->
+        <main id="chat-container" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 pb-16">
+            {% for message in chat_history %}
+                <div class="flex w-full {% if message.is_from_user %}justify-end{% else %}justify-start{% endif %} fade-in-up">
+                    <div class="flex items-end space-x-2 {% if message.is_from_user %}flex-row-reverse{% endif %}">
+                        <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                            <i class="fas {% if message.is_from_user %}fa-user{% else %}fa-robot{% endif %} text-xl text-white"></i>
+                        </div>
+                        <div class="w-fit max-w-[70%] p-4 rounded-2xl {% if message.is_from_user %}bg-white text-black rounded-br-none{% else %}bg-gray-800 text-white rounded-bl-none{% endif %}">
+                            {% if message.content.type == 'image' %}  
+                                <img src="../../data/car_images_all/{{ message.content }}" alt="Searched Image" class="max-w-full h-auto rounded-lg">
+                            {% elif message.content.type == 'gen' %}
+                                <img src="../../data/generated_images/{{ message.content }}" alt="Generated Image" class="max-w-full h-auto rounded-lg">
+                            {% else %}
+                                <p class="text-sm break-words">{{ message.content|linebreaksbr }}</p>
+                            {% endif %}
+                            <div class="text-xs mt-2 {% if message.is_from_user %}text-gray-500{% else %}text-gray-400{% endif %}">
+                                {{ message.created_at|date:"Y-m-d H:i" }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="text-center text-gray-500 mt-8">
+                    <p>아직 대화 내용이 없습니다.</p>
+                    <p>아래 입력창에 질문을 입력하여 대화를 시작해보세요!</p>
+                </div>
+            {% endfor %}
+        </main>
+
+        <!-- Input form -->
+        <footer class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 p-4">
+            <form id="message-form" method="post" action="{% url 'chat_bot:chat_conversation_with_id' session_id=session_id %}" class="flex items-center gap-4">
+                {% csrf_token %}
+                <input type="text" name="message" id="message-input" class="flex-1 p-3 bg-gray-800 text-white border border-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-white" placeholder="자동차 모델에 대해 질문해보세요..." autocomplete="off">
+                <button type="submit" class="bg-white text-black rounded-full p-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </footer>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatContainer = document.getElementById('chat-container');
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+
+        function appendMessage(content, isUser, isImage = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex w-full ${isUser ? 'justify-end' : 'justify-start'} fade-in-up`;
+
+            const innerDiv = document.createElement('div');
+            innerDiv.className = `flex items-end space-x-2 ${isUser ? 'flex-row-reverse' : ''}`;
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center';
+            avatarDiv.innerHTML = `<i class="fas ${isUser ? 'fa-user' : 'fa-robot'} text-xl text-white"></i>`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = `w-fit max-w-[70%] p-4 rounded-2xl ${isUser ? 'bg-white text-black rounded-br-none' : 'bg-gray-800 text-white rounded-bl-none'}`;
+
+            if (isImage) {
+                const imgElement = document.createElement('img');
+                imgElement.src = content;
+                imgElement.alt = "Generated Image";
+                imgElement.className = "max-w-full h-auto rounded-lg";
+                contentDiv.appendChild(imgElement);
+            } else {
+                const pElement = document.createElement('p');
+                pElement.className = 'text-sm break-words';
+                pElement.innerText = content;
+                contentDiv.appendChild(pElement);
+            }
+
+            const timeDiv = document.createElement('div');
+            timeDiv.className = `text-xs mt-2 ${isUser ? 'text-gray-500' : 'text-gray-400'}`;
+            const now = new Date();
+            timeDiv.innerText = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            contentDiv.appendChild(timeDiv);
+
+            innerDiv.appendChild(avatarDiv);
+            innerDiv.appendChild(contentDiv);
+            messageDiv.appendChild(innerDiv);
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        messageForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const userMessage = messageInput.value.trim();
+            if (!userMessage) return;
+
+            appendMessage(userMessage, true);
+            messageInput.value = '';
+
+            const formData = new FormData();
+            formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+            formData.append('message', userMessage);
+
+            const response = await fetch(messageForm.action, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let aiResponseContent = '';
+            let aiMessageDiv = null;
+            let aiContentDiv = null;
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value, { stream: true });
+                let jsonChunk;
+                try {
+                    jsonChunk = JSON.parse(chunk);
+                } catch (e) {
+                    console.error("Failed to parse JSON chunk:", chunk, e);
+                    continue;
+                }
+
+                if (jsonChunk.type === 'image') {
+                    appendMessage(jsonChunk.content, false, true);
+                    if (aiMessageDiv) {
+                        aiMessageDiv.remove();
+                        aiMessageDiv = null;
+                        aiContentDiv = null;
+                    }
+                } else if (jsonChunk.type === 'text') {
+                    if (!aiMessageDiv) {
+                        aiMessageDiv = document.createElement('div');
+                        aiMessageDiv.className = `flex w-full justify-start fade-in-up`;
+
+                        const innerDiv = document.createElement('div');
+                        innerDiv.className = `flex items-end space-x-2`;
+
+                        const avatarDiv = document.createElement('div');
+                        avatarDiv.className = 'w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center';
+                        avatarDiv.innerHTML = `<i class="fas fa-robot text-xl text-white"></i>`;
+
+                        aiContentDiv = document.createElement('div');
+                        aiContentDiv.className = `w-fit max-w-[70%] p-4 rounded-2xl bg-gray-800 text-white rounded-bl-none`;
+
+                        const pElement = document.createElement('p');
+                        pElement.className = 'text-sm break-words';
+                        aiContentDiv.appendChild(pElement);
+
+                        const timeDiv = document.createElement('div');
+                        timeDiv.className = `text-xs mt-2 text-gray-400`;
+                        const now = new Date();
+                        timeDiv.innerText = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                        aiContentDiv.appendChild(timeDiv);
+
+                        innerDiv.appendChild(avatarDiv);
+                        innerDiv.appendChild(aiContentDiv);
+                        aiMessageDiv.appendChild(innerDiv);
+                        chatContainer.appendChild(aiMessageDiv);
+                    }
+                    aiResponseContent += jsonChunk.content;
+                    aiContentDiv.querySelector('p').innerText = aiResponseContent;
+                }
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        });
+    });
+</script>
+{% endblock %}
