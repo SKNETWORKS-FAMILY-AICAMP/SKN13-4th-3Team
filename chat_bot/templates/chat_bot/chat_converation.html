@@ -55,7 +55,11 @@
                             <i class="fas {% if message.is_from_user %}fa-user{% else %}fa-robot{% endif %} text-xl text-white"></i>
                         </div>
                         <div class="w-fit max-w-[70%] p-4 rounded-2xl {% if message.is_from_user %}bg-white text-black rounded-br-none{% else %}bg-gray-800 text-white rounded-bl-none{% endif %}">
-                            <p class="text-sm break-words">{{ message.content|linebreaksbr }}</p>
+                            {% if message.type == 'image' %}
+                                <img src="{{ message.content }}" alt="Generated Image" class="max-w-full h-auto rounded-lg">
+                            {% else %}
+                                <p class="text-sm break-words">{{ message.content|linebreaksbr }}</p>
+                            {% endif %}
                             <div class="text-xs mt-2 {% if message.is_from_user %}text-gray-500{% else %}text-gray-400{% endif %}">
                                 {{ message.created_at|date:"Y-m-d H:i" }}
                             </div>
@@ -83,4 +87,133 @@
     </div>
 
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatContainer = document.getElementById('chat-container');
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+
+        function appendMessage(content, isUser, isImage = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex w-full ${isUser ? 'justify-end' : 'justify-start'} fade-in-up`;
+
+            const innerDiv = document.createElement('div');
+            innerDiv.className = `flex items-end space-x-2 ${isUser ? 'flex-row-reverse' : ''}`;
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center';
+            avatarDiv.innerHTML = `<i class="fas ${isUser ? 'fa-user' : 'fa-robot'} text-xl text-white"></i>`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = `w-fit max-w-[70%] p-4 rounded-2xl ${isUser ? 'bg-white text-black rounded-br-none' : 'bg-gray-800 text-white rounded-bl-none'}`;
+
+            if (isImage) {
+                const imgElement = document.createElement('img');
+                imgElement.src = content;
+                imgElement.alt = "Generated Image";
+                imgElement.className = "max-w-full h-auto rounded-lg";
+                contentDiv.appendChild(imgElement);
+            } else {
+                const pElement = document.createElement('p');
+                pElement.className = 'text-sm break-words';
+                pElement.innerText = content;
+                contentDiv.appendChild(pElement);
+            }
+
+            const timeDiv = document.createElement('div');
+            timeDiv.className = `text-xs mt-2 ${isUser ? 'text-gray-500' : 'text-gray-400'}`;
+            const now = new Date();
+            timeDiv.innerText = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            contentDiv.appendChild(timeDiv);
+
+            innerDiv.appendChild(avatarDiv);
+            innerDiv.appendChild(contentDiv);
+            messageDiv.appendChild(innerDiv);
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        messageForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const userMessage = messageInput.value.trim();
+            if (!userMessage) return;
+
+            appendMessage(userMessage, true);
+            messageInput.value = '';
+
+            const formData = new FormData();
+            formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+            formData.append('message', userMessage);
+
+            const response = await fetch(messageForm.action, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let aiResponseContent = '';
+            let aiMessageDiv = null;
+            let aiContentDiv = null;
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value, { stream: true });
+                let jsonChunk;
+                try {
+                    jsonChunk = JSON.parse(chunk);
+                } catch (e) {
+                    console.error("Failed to parse JSON chunk:", chunk, e);
+                    continue;
+                }
+
+                if (jsonChunk.type === 'image') {
+                    appendMessage(jsonChunk.content, false, true);
+                    if (aiMessageDiv) {
+                        aiMessageDiv.remove();
+                        aiMessageDiv = null;
+                        aiContentDiv = null;
+                    }
+                } else if (jsonChunk.type === 'text') {
+                    if (!aiMessageDiv) {
+                        aiMessageDiv = document.createElement('div');
+                        aiMessageDiv.className = `flex w-full justify-start fade-in-up`;
+
+                        const innerDiv = document.createElement('div');
+                        innerDiv.className = `flex items-end space-x-2`;
+
+                        const avatarDiv = document.createElement('div');
+                        avatarDiv.className = 'w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center';
+                        avatarDiv.innerHTML = `<i class="fas fa-robot text-xl text-white"></i>`;
+
+                        aiContentDiv = document.createElement('div');
+                        aiContentDiv.className = `w-fit max-w-[70%] p-4 rounded-2xl bg-gray-800 text-white rounded-bl-none`;
+
+                        const pElement = document.createElement('p');
+                        pElement.className = 'text-sm break-words';
+                        aiContentDiv.appendChild(pElement);
+
+                        const timeDiv = document.createElement('div');
+                        timeDiv.className = `text-xs mt-2 text-gray-400`;
+                        const now = new Date();
+                        timeDiv.innerText = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                        aiContentDiv.appendChild(timeDiv);
+
+                        innerDiv.appendChild(avatarDiv);
+                        innerDiv.appendChild(aiContentDiv);
+                        aiMessageDiv.appendChild(innerDiv);
+                        chatContainer.appendChild(aiMessageDiv);
+                    }
+                    aiResponseContent += jsonChunk.content;
+                    aiContentDiv.querySelector('p').innerText = aiResponseContent;
+                }
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        });
+    });
+</script>
 {% endblock %}

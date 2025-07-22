@@ -44,16 +44,26 @@ def chat_conversation(request, session_id=None):
                         chat_history_for_llm.append({"role": "user" if msg.is_from_user else "assistant", "content": msg.content})
 
                     # Pass chat history to the pipeline
-                    for chunk in chatbot_pipeline(user_input=user_message_content):
-                        if isinstance(chunk, dict) and 'generation' in chunk:
-                            content = chunk['generation']
-                            ai_response_content += content
-                            yield content
-                        elif isinstance(chunk, str): # Fallback for non-dict chunks
-                            ai_response_content += chunk
-                            yield chunk
+                    for chunk_data in chatbot_pipeline(user_input=user_message_content):
+                        if isinstance(chunk_data, dict):
+                            if chunk_data.get("type") == "image":
+                                yield json.dumps({"type": "image", "content": chunk_data["content"]}) + "\n"
+                                ai_response_content += f"[Image: {chunk_data['content']}]" # Store a placeholder for history
+                            elif chunk_data.get("type") == "text":
+                                content = chunk_data["content"]
+                                ai_response_content += content
+                                yield json.dumps({"type": "text", "content": content}) + "\n"
+                            elif 'generation' in chunk_data: # Fallback for older generation chunks if any
+                                content = chunk_data['generation']
+                                ai_response_content += content
+                                yield json.dumps({"type": "text", "content": content}) + "\n"
+                            else:
+                                print(f"Unexpected dict chunk: {chunk_data}")
+                        elif isinstance(chunk_data, str):
+                            ai_response_content += chunk_data
+                            yield json.dumps({"type": "text", "content": chunk_data}) + "\n"
                         else:
-                            print(f"Unexpected chunk type: {type(chunk)}, content: {chunk}")
+                            print(f"Unexpected chunk type: {type(chunk_data)}, content: {chunk_data}")
 
                 except Exception as e:
                     error_message = f"챗봇 처리 중 오류가 발생했습니다: {e}"
@@ -64,7 +74,7 @@ def chat_conversation(request, session_id=None):
                 # 3. AI 응답 저장 (스트리밍 완료 후)
                 ChatMessage.objects.create(session=session, is_from_user=False, content=ai_response_content)
 
-            return StreamingHttpResponse(generate_response(), content_type='text/plain')
+            return StreamingHttpResponse(generate_response(), content_type='application/x-ndjson')
         
         return JsonResponse({'status': 'error', 'message': 'No message provided'}, status=400)
 
