@@ -52,7 +52,8 @@ def init_description_vectordb():
         Document(
             page_content=f"car_name: {item.get('car_name_kr')}, {item.get('car_name_en')} | description: {item.get('description')}",
             metadata={
-                "description_keywords": item.get('description_keywords', [])
+                "description_keywords": item.get('description_keywords', []),
+                "url": item.get('image_path', [])
             }
         )
         for item in json_docs
