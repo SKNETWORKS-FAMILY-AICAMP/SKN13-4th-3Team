@@ -329,7 +329,7 @@ McKinsey 다이아몬드 모델은 다음과 같은 단계로 UX와 SX를 치밀
 
 
  🔧**시스템 아키텍처**<br>
-<img src="https://github.com/user-attachments/files/21360548/SystemArchitecture.pdf" width="800" alt="system"> <br>
+<img src="https://github.com/user-attachments/assets/145a2613-35c6-4bc7-8acd-94120557785a" width="800" alt="system"> <br>
 
 
  🔧**UI 화면 설계서**<br>
