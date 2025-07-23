@@ -1,0 +1,292 @@
+[
+  {
+    "category": "수소___전기차",
+    "car_name": "디_올_뉴_넥쏘",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/nexo-25fc-well-side.png"
+  },
+  {
+    "category": "수소___전기차",
+    "car_name": "아이오닉_5",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/the-new-ioniq5-25my-well-side.png"
+  },
+  {
+    "category": "수소___전기차",
+    "car_name": "코나_Electric",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/kona-electric-25my-well-side.png"
+  },
+  {
+    "category": "수소___전기차",
+    "car_name": "아이오닉_9",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/ioniq9-24lc-well-side.png"
+  },
+  {
+    "category": "수소___전기차",
+    "car_name": "ST1",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/st1-26my-well-side.png"
+  },
+  {
+    "category": "수소___전기차",
+    "car_name": "아이오닉_6",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/ioniq6-24my-well-side.png"
+  },
+  {
+    "category": "수소___전기차",
+    "car_name": "포터_II_Electric",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/porter2-electric-25my-well-side.png"
+  },
+  {
+    "category": "수소___전기차",
+    "car_name": "포터_II_Electric_특장차",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/porter2-electric-special-25my-well-side.png"
+  },
+  {
+    "category": "수소___전기차",
+    "car_name": "2026_캐스퍼_일렉트릭",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/casper_ev_26my_well_side.png"
+  },
+  {
+    "category": "N",
+    "car_name": "아반떼_N",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/avante-n-26my-well-side.png"
+  },
+  {
+    "category": "N",
+    "car_name": "아이오닉_5_N",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/ioniq5-n-25my-well-side.png"
+  },
+  {
+    "category": "승용",
+    "car_name": "그랜저",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/grandeur-26my-well-side.png"
+  },
+  {
+    "category": "승용",
+    "car_name": "그랜저_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/grandeur-hybrid-26my-well-side.png"
+  },
+  {
+    "category": "승용",
+    "car_name": "아반떼",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/avante-26my-well-side.png"
+  },
+  {
+    "category": "승용",
+    "car_name": "아반떼_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/avante-hybrid-26my-well-side.png"
+  },
+  {
+    "category": "승용",
+    "car_name": "쏘나타_디_엣지",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/sonata-the-edge-25my-well-side.png"
+  },
+  {
+    "category": "승용",
+    "car_name": "쏘나타_디_엣지_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/sonata-the-edge-hybrid-25my-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "코나",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/kona-24my-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "코나_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/kona-hybrid-24my-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "베뉴",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/venue-25my-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "디_올_뉴_팰리세이드",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/palisade-25fc-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "디_올_뉴_팰리세이드_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/palisade-25fc-hybrid-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "투싼",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/tucson-25my-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "투싼_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/tucson-hybrid-25my-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "싼타페",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/santafe-25my-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "싼타페_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/santafe-hybrid-25my-well-side.png"
+  },
+  {
+    "category": "SUV",
+    "car_name": "2026_캐스퍼",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/casper-26my-well-side.png"
+  },
+  {
+    "category": "MPV",
+    "car_name": "스타리아_라운지",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-lounge-24my-well-side.png"
+  },
+  {
+    "category": "MPV",
+    "car_name": "스타리아_라운지_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-lounge-hybrid-24my-well-side.png"
+  },
+  {
+    "category": "MPV",
+    "car_name": "스타리아",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-24my-well-side.png"
+  },
+  {
+    "category": "MPV",
+    "car_name": "스타리아_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-hybrid-24my-well-side.png"
+  },
+  {
+    "category": "MPV",
+    "car_name": "스타리아_킨더",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-kinder-24my-well-side.png"
+  },
+  {
+    "category": "MPV",
+    "car_name": "스타리아_라운지_캠퍼",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-lounge-camper-24my-well-side.png"
+  },
+  {
+    "category": "MPV",
+    "car_name": "스타리아_라운지_캠퍼_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-lounge-camper-Hybrid-25lc-well-side.png"
+  },
+  {
+    "category": "MPV",
+    "car_name": "스타리아_라운지_리무진",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-lounge-limousine-24my-well-side.png"
+  },
+  {
+    "category": "MPV",
+    "car_name": "스타리아_라운지_리무진_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-lounge-limousine-Hybrid-25lc-well-side.png"
+  },
+  {
+    "category": "소형트럭&택시",
+    "car_name": "그랜저_택시",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/grandeur-taxi-26my-well-side.png"
+  },
+  {
+    "category": "소형트럭&택시",
+    "car_name": "쏘나타_택시",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/sonata-taxi-25my-well-side.png"
+  },
+  {
+    "category": "소형트럭&택시",
+    "car_name": "스타리아_라운지_모빌리티",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-lounge-mobility-24my-well-side.png"
+  },
+  {
+    "category": "소형트럭&택시",
+    "car_name": "스타리아_라운지_모빌리티_Hybrid",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/staria-lounge-mobility-hybrid-24my-well-side.png"
+  },
+  {
+    "category": "소형트럭&택시",
+    "car_name": "포터_II",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/porter2-well-side.png"
+  },
+  {
+    "category": "소형트럭&택시",
+    "car_name": "포터_II_특장차",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/porter2-special-24my-well-side.png"
+  },
+  {
+    "category": "트럭",
+    "car_name": "더_뉴_마이티",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/290x130-mighty.png"
+  },
+  {
+    "category": "트럭",
+    "car_name": "더_뉴_파비스",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/pavise-well-side.png"
+  },
+  {
+    "category": "트럭",
+    "car_name": "뉴파워트럭",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/290x130-new-power-truck.png"
+  },
+  {
+    "category": "트럭",
+    "car_name": "더_뉴_엑시언트",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/290x130-xcient.png"
+  },
+  {
+    "category": "트럭",
+    "car_name": "엑시언트_수소전기트럭",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/290x130-xcient-fuel-cell.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "쏠라티",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/solati-well-side.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "카운티",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/county-24my-well-side.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "카운티_일렉트릭",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/county-electric-24my-well-side.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "일렉시티_타운",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/elec-city-town-290x130.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "뉴_슈퍼에어로시티",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/super-aero-city-290x130..png"
+  },
+  {
+    "category": "버스",
+    "car_name": "일렉시티",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/elec-city-290x130.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "일렉시티_수소전기버스",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/elec-city-fcev-290x130.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "일렉시티_이층버스",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/elec-city-double-decker-290x130.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "유니버스",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/universe-290x1310.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "유니버스_수소전기버스",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/universe-fuel-cell-290x130.png"
+  },
+  {
+    "category": "버스",
+    "car_name": "유니버스_모바일_오피스",
+    "image_src": "https://www.hyundai.com/contents/repn-car/side-w/%EB%8C%80%ED%91%9C%EC%B0%A8-%EC%9D%B4%EB%AF%B8%EC%A7%80(290x130).png"
+  }
+]
